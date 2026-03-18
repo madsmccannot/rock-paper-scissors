@@ -1,8 +1,42 @@
-console.log("Hello World");
+//initial greeting
+const greeting = document.createElement("h1");
+greeting.style.textAlign = "center";
+greeting.textContent = "Hi! Let's play a game :)";
+document.body.appendChild(greeting);
 
 // This game is played against the computer
 // I have to write a function that randomly returns "rock", "paper" or "scissors".
 
+// Declare the players score variables
+// I have to write variables to keep track of the players score.
+// I have to write a function that takes both human and computer choices as arguments,
+//plays a single round, increments the round winner's score and logs a winner a nnouncement.
+
+//initial state and crwation of DOM elements
+let humanScore = 0;
+let computerScore = 0;
+
+const resultsDiv = document.createElement("div");
+const scoreDiv = document.createElement("div");
+const rock = document.createElement("button");
+const paper = document.createElement("button");
+const scissors = document.createElement("button");
+const resetBtn = document.createElement("button");
+
+//setup UI
+rock.textContent = "Rock";
+paper.textContent = "Paper";
+scissors.textContent = "Scissors";
+resetBtn.textContent = "Restart Game";
+scoreDiv.textContent = "Score -> You: 0 | Computer: 0";
+resultsDiv.style.marginTop = "20px";
+resultsDiv.style.fontSize = "18px";
+scoreDiv.style.marginTop = "10px";
+scoreDiv.style.fontWeight = "bold";
+
+document.body.append(rock, paper, scissors, resetBtn, resultsDiv, scoreDiv);
+
+//functions
 function getComputerChoice() {
   let randomNumber = Math.random();
 
@@ -15,62 +49,57 @@ function getComputerChoice() {
   }
 }
 
-
-// Write the logic to get the human choice
-// I have to write a function that takes the user choice and returns it
-
-function getHumanChoice() {
-  let humanChoice = prompt("Choose between Rock, Paper or Scissors: ");
-  return humanChoice.toLowerCase();
-}
-
-// Declare the players score variables
-// I have to write variables to keep track of the players score.
-// Write logic to play a single round
-// I have to write a function that takes both human and computer choices as arguments,
-//plays a single round, increments the round winner's score and logs a winner a nnouncement.
-
 // Write logic to play the entire game, it must have 5 rounds
 //The last 5 comments were glued because they were passed to the function bellow
 
-function playGame() {
-  let humanScore = 0;
-  let computerScore = 0;
-
-  function playRound(humanChoice, computerChoice) {
-    if (humanChoice === computerChoice) {
-      console.log("It's a tie!");
-    } else if (
+function playRound(humanChoice, computerChoice) {
+  if (humanChoice === computerChoice) {
+      resultsDiv.textContent = "It's a tie!";
+  } else if (
       (humanChoice === "rock" && computerChoice === "scissors") ||
       (humanChoice === "paper" && computerChoice === "rock") ||
       (humanChoice === "scissors" && computerChoice === "paper")
-    ) {
+  ) {
       humanScore++;
-      console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-    } else {
+      resultsDiv.textContent = `You win! ${humanChoice} beats ${computerChoice}`;   } else {
       computerScore++;
-      console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+      resultsDiv.textContent = `You lose! ${computerChoice} beats ${humanChoice}`;
+  }
+
+  scoreDiv.textContent = `Score -> You: ${humanScore} | Computer: ${computerScore}`;
+ 
+  if (humanScore === 5 || computerScore === 5) {
+    rock.disabled = true;
+    paper.disabled = true;
+    scissors.disabled = true;
+    if (humanScore > computerScore) {
+      resultsDiv.textContent += "🎉 You won the game!";
+    } else {
+      resultsDiv.textContent += "💻 Computer won the game!";
     }
-  }
-  // Play 5 rounds
-  for (let i = 0; i < 5; i++) {
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
-    playRound(humanSelection, computerSelection);
-  }
-
-  // Declare final winner
-  console.log("Final Score: ");
-  console.log("Human: ", humanScore);
-  console.log("Computer: ", computerScore);
-
-  if (humanScore > computerScore) {
-    console.log("You won the game!");
-  } else if (computerScore > humanScore) {
-    console.log("Computer won the game!");
-  } else {
-    console.log("The game is a tie! Even thought this one is improbable");
   }
 }
 
-playGame(); 
+//event listeners
+rock.addEventListener("click", () => {
+  playRound("rock", getComputerChoice());
+});
+paper.addEventListener("click", () => {
+  playRound("paper", getComputerChoice());
+  });
+scissors.addEventListener("click", () => {
+  playRound("scissors", getComputerChoice());
+});
+
+resetBtn.addEventListener("click", () => {
+  humanScore = 0;
+  computerScore = 0;
+
+  scoreDiv.textContent = "Score -> You: 0 | Computer: 0";
+  resultsDiv.textContent = "Game Restarted";
+
+  rock.disabled = false;
+  paper.disabled = false;
+  scissors.disabled = false;
+});
+

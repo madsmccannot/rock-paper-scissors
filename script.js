@@ -7,11 +7,6 @@ document.body.appendChild(greeting);
 // This game is played against the computer
 // I have to write a function that randomly returns "rock", "paper" or "scissors".
 
-// Declare the players score variables
-// I have to write variables to keep track of the players score.
-// I have to write a function that takes both human and computer choices as arguments,
-//plays a single round, increments the round winner's score and logs a winner a nnouncement.
-
 //initial state and crwation of DOM elements
 let humanScore = 0;
 let computerScore = 0;

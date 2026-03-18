@@ -32,7 +32,7 @@ scoreDiv.textContent = "Score -> You: 0 | Computer: 0";
 resultsDiv.style.marginTop = "20px";
 resultsDiv.style.fontSize = "18px";
 scoreDiv.style.marginTop = "10px";
-scoreDiv.style.fontWeight = "bold";
+scoreDiv.style.fontWeight = "bold"; 
 
 document.body.append(rock, paper, scissors, resetBtn, resultsDiv, scoreDiv);
 
